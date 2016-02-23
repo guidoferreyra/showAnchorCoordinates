@@ -1,4 +1,4 @@
-Show Coordinates
+Show Anchor Coordinates
 ==============
 This plugin constantly displays the coordinates of the anchors.
 
