@@ -74,11 +74,15 @@ class showAnchorCoordinates ( NSObject, GlyphsReporterProtocol ):
 			
 	
 	def drawBackgroundForLayer_( self, Layer ):
-		try:
-			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.5, 0.3, 0.5 ).set()
-			self.showAnchors ( Layer )
-		except Exception as e:
-			self.logToConsole( "drawBackgroundForLayer_: %s" % str(e) )
+		currentController = self.controller.view().window().windowController()
+		if currentController:
+		    tool = currentController.toolDrawDelegate()
+		    if not tool.isKindOfClass_( NSClassFromString("GlyphsToolText") ) and not tool.isKindOfClass_( NSClassFromString("GlyphsToolHand") ): # don't activate if on cursor tool, or pan tool
+				try:
+					NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.5, 0.3, 0.5 ).set()
+					self.showAnchors ( Layer )
+				except Exception as e:
+					self.logToConsole( "drawBackgroundForLayer_: %s" % str(e) )
 	
 	def drawBackgroundForInactiveLayer_( self, Layer ):
 		try:
